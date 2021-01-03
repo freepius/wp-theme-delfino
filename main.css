@@ -102,3 +102,78 @@ body > nav a.active {
 body > nav a[rel="home"] {
     color: var(--color-primary);
 }
+
+
+/************************************************
+ * PAGE WITH H2 AND COLLAPSED SECTIONS
+ ***********************************************/
+
+.collapser {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}
+
+.collapser > h2 {
+    grid-column: 1/2;
+    margin-top: 0;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.collapser > h2.active {
+    text-decoration: underline;
+}
+
+.collapser > h2:hover {
+    color: var(--color-primary);
+}
+
+.collapser > h2 + :not(h2) {
+    grid-column: 2/3;
+    grid-row: 1/span 100;
+
+    position: absolute;
+    visibility: hidden;
+    z-index: -1000;
+}
+
+.collapser > h2.active + :not(h2) {
+    position: initial;
+    visibility: initial;
+    z-index: initial;
+}
+
+@media (max-width: 850px) {
+    .collapser {
+        display: block;
+    }
+
+    .collapser > h2 {
+        margin: 0;
+        padding: 16px 8px;
+        border-top: 3px solid black;
+    }
+
+    .collapser > h2.active {
+        text-decoration: none;
+    }
+
+    .collapser > h2::after {
+        content: '+';
+        float: right;
+    }
+
+    .collapser > h2.active::after {
+        content: '–';
+    }
+
+    .collapser > h2 + :not(h2) {
+        padding: 0 8px;
+    }
+
+    .collapser > :last-child,
+    .collapser > h2:last-of-type:not(.active) {
+        padding-bottom: 16px;
+        border-bottom: 3px solid black;
+    }
+}
