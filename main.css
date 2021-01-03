@@ -1,0 +1,104 @@
+/************************************************
+ * VARIABLES
+ ***********************************************/
+
+:root {
+    --color-primary: #051e60;
+    --page-max-width: 1200px;
+}
+
+
+/************************************************
+ * GLOBAL STYLES
+ ***********************************************/
+
+body {
+    margin: 0;
+    background-color: white;
+    line-height: 1.4;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    letter-spacing: 0.02em;
+}
+
+body > * {
+    max-width: var(--page-max-width);
+    margin: 0 auto;
+    padding: 30px;
+}
+
+p {
+    margin-top: 0;
+    text-align: justify;
+}
+
+a {
+    color: black;
+}
+
+a:hover {
+    color: var(--color-primary);
+}
+
+
+/************************************************
+ * HEADER
+ ***********************************************/
+
+body > header {
+    max-width: 100%;
+    display: grid;
+    grid-template-columns: minmax(max-content, var(--page-max-width));
+    justify-content: center;
+
+    background-color: var(--color-primary);
+    color: white;
+    font-size: 1.33em;
+    font-weight: 700;
+}
+
+body > header > * {
+    max-width: 450px;
+    opacity: 0.95;
+}
+
+body > header a,
+body > header a:hover {
+    color: inherit;
+}
+
+body > header a:hover {
+    opacity: 0.6;
+}
+
+@media (min-width: 851px) {
+    body > header {
+        padding-top: 80px;
+        padding-bottom: 80px;
+    }
+}
+
+
+/************************************************
+ * MAIN MENU
+ ***********************************************/
+
+body > nav {
+    position: sticky;
+    top: 0;
+    background-color: inherit;
+    font-size: 2.4em;
+    font-weight: 700;
+}
+
+body > nav a {
+    padding-right: 10px;
+    text-decoration: none;
+}
+
+body > nav a.active {
+    text-decoration: underline;
+}
+
+body > nav a[rel="home"] {
+    color: var(--color-primary);
+}
