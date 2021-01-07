@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
+  handleToggleMainMenu()
+
   makeOnlyOneChildPerH2()
 
   const allH2 = document.querySelectorAll('main.collapser > h2')
@@ -11,6 +13,19 @@ document.addEventListener('DOMContentLoaded', () => {
     )
   ))
 })
+
+/**
+ * Manage the "toggle" button of the main menu
+ */
+function handleToggleMainMenu () {
+  const mainMenu = document.getElementById('main-menu')
+  const toggler = document.querySelector('body > nav > button[aria-controls="main-menu"]')
+
+  toggler.addEventListener('click', () => {
+    mainMenu.classList.toggle('active')
+    toggler.setAttribute('aria-expanded', toggler.getAttribute('aria-expanded') === 'true' ? 'false' : 'true')
+  })
+}
 
 /**
  * If a <h2> element has several children, group them in a <section> element.
