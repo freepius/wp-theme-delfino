@@ -1,0 +1,57 @@
+/************************************************
+ * MAIN MENU
+ ***********************************************/
+
+ body > nav {
+    position: sticky;
+    top: 0;
+    background-color: inherit;
+    font-size: 2.4em;
+    font-weight: 700;
+
+    a {
+        padding-right: 10px;
+        text-decoration: none;
+
+        &.active {
+            text-decoration: underline;
+        }
+
+        &[rel="home"] {
+            color: var(--color-primary);
+        }
+    }
+
+    > #main-menu {
+        display: inline;
+    }
+
+    > button {
+        display: none;
+    }
+
+    @media (max-width: $breakpoint-lg) {
+        font-size: 2em;
+    }
+
+    @media (max-width: $breakpoint-md) {
+        > #main-menu {
+            display: block;
+        }
+    }
+
+    @media (max-width: $breakpoint-sm) {
+        > #main-menu {
+            display: none;
+            &.active { display: block; }
+            > a { display: block; }
+        }
+
+        > button {
+            display: initial;
+            float: right;
+            background: none;
+            border: none;
+        }
+    }
+}
