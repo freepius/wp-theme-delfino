@@ -12,18 +12,23 @@
     a {
         padding-right: 10px;
         text-decoration: none;
-
-        &.active {
-            text-decoration: underline;
-        }
-
-        &[rel="home"] {
-            color: var(--color-primary);
-        }
     }
 
-    > #main-menu {
+    > h1 > a {
+        color: var(--color-primary);
+    }
+
+    > h1,
+    > ul,
+    > ul > li {
+        margin: 0;
+        padding: 0;
         display: inline;
+        font-size: inherit;
+    }
+
+    > ul > li.current-menu-item > a {
+        text-decoration: underline;
     }
 
     > button {
@@ -35,16 +40,19 @@
     }
 
     @media (max-width: $breakpoint-md) {
-        > #main-menu {
+        > ul {
             display: block;
         }
     }
 
     @media (max-width: $breakpoint-sm) {
-        > #main-menu {
-            display: none;
-            &.active { display: block; }
-            > a { display: block; }
+        > ul {
+            > li { display: none; }
+
+            &.active > li,
+            > li.current-menu-item {
+                display: block;
+            }
         }
 
         > button {

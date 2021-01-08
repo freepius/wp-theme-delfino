@@ -14,7 +14,8 @@ wp-content/plugins/hello.php
 # ignore specific themes
 wp-content/themes/twenty*/
 
-# ignore node dependency directories
+# ignore composer and node dependency directories
+vendor/
 node_modules/
 
 # ignore log files and databases

@@ -1,9 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
   handleToggleMainMenu()
 
-  makeOnlyOneChildPerH2()
-
   const allH2 = document.querySelectorAll('main.collapser > h2')
+
+  if (allH2.length === 0) {
+    return
+  }
+
+  makeOnlyOneChildPerH2()
 
   // collapse on <h2> click
   allH2.forEach(h2 => h2.addEventListener('click', e =>
