@@ -19,6 +19,10 @@
 p {
     margin: 0;
     text-align: justify;
+
+    article & {
+        margin-bottom: 1rem;
+    }
 }
 
 a {

@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   handleToggleMainMenu()
 
-  const allH2 = document.querySelectorAll('main.collapser > h2')
+  const allH2 = document.querySelectorAll('.collapser > h2')
 
   if (allH2.length === 0) {
     return
@@ -35,7 +35,7 @@ function handleToggleMainMenu () {
  * If a <h2> element has several children, group them in a <section> element.
  */
 function makeOnlyOneChildPerH2 () {
-  let h2 = document.querySelector('main.collapser > h2:first-of-type')
+  let h2 = document.querySelector('.collapser > h2:first-of-type')
   let e = h2.nextElementSibling
   let section = document.createElement('section')
 
