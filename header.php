@@ -20,6 +20,8 @@
 	if ( $delfino_description || is_customize_preview() ) {
 		echo "<p>$delfino_description</p>"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
+
+	is_active_sidebar( 'header-content' ) ? dynamic_sidebar( 'header-content' ) : '';
 	?>
 </header>
 

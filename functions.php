@@ -52,6 +52,25 @@ add_action( 'after_setup_theme', 'delfino_content_width', 0 );
 
 
 /**
+ * Register widget area.
+ *
+ * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
+ */
+function delfino_widgets_init() {
+	register_sidebar([
+		'name'          => esc_html__( 'Header content', 'delfino' ),
+		'id'            => 'header-content',
+		'description'   => esc_html__( 'Add your header content here.', 'delfino' ),
+		'before_widget' => '<section id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</section>',
+		'before_title'  => '<h2 class="widget-title">',
+		'after_title'   => '</h2>',
+	]);
+}
+add_action( 'widgets_init', 'delfino_widgets_init' );
+
+
+/**
  * Enqueue scripts and styles.
  */
 function delfino_scripts() {
