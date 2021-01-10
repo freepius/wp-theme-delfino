@@ -26,6 +26,18 @@
         opacity: 0.6;
     }
 
+    // Our WordPress sidebar for the header
+    > section#header-content {
+        // Widget wrapper
+        > li { display: block; }
+
+        // Widget title
+        > li > h2 {
+            margin: 0;
+            font-size: 1.2em;
+        }
+    }
+
     @media (min-width: $breakpoint-sm + 1) {
         padding-top: 80px;
         padding-bottom: 80px;
