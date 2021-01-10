@@ -1,0 +1,14 @@
+/************************************************
+ * STYLES FOR THE WORDPRESS HOME PAGE
+ ***********************************************/
+
+body.home {
+    > main > article {
+        max-width: 960px;
+        margin-bottom: 64px;
+
+        figure {
+            margin: 0;
+        }
+    }
+}

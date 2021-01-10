@@ -74,7 +74,50 @@ add_action( 'widgets_init', 'delfino_widgets_init' );
  * Enqueue scripts and styles.
  */
 function delfino_scripts() {
+	$uri = get_template_directory_uri();
+
 	wp_enqueue_style( 'delfino-style', get_stylesheet_uri(), [], DELFINO_VERSION );
-	wp_enqueue_script( 'delfino-main', get_template_directory_uri() . '/js/main.js', [], DELFINO_VERSION, true );
+	wp_enqueue_script( 'delfino-main', "$uri/js/main.js", [], DELFINO_VERSION, true );
+
+	// javascript for the home page 'infinite scroll' effect
+	if (is_home()) {
+		wp_enqueue_script( 'delfino-infinite-scroll', "$uri/js/infinite-scroll.js", [], DELFINO_VERSION, true );
+		wp_localize_script( 'delfino-infinite-scroll', 'ajaxurl', admin_url( 'admin-ajax.php' ) );
+	}
 }
 add_action( 'wp_enqueue_scripts', 'delfino_scripts' );
+
+
+/**
+ * Manage Ajax request for the home page 'infinite scroll' effect.
+ */
+function delfino_infinite_scroll() {
+	if (! isset($_GET['offset'])) {
+		wp_die();
+	}
+
+	$query = new WP_Query([
+		'cat' => 1, // 'home' category
+		'offset' => (int) $_GET['offset'],
+	]);
+
+	while ($query->have_posts()) {
+		$query->the_post();
+		get_template_part( 'template-parts/content', get_post_type() );
+	}
+
+	wp_die();
+}
+add_action( 'wp_ajax_delfino_infinite_scroll', 'delfino_infinite_scroll' );
+add_action( 'wp_ajax_nopriv_delfino_infinite_scroll', 'delfino_infinite_scroll' );
+
+
+/**
+ * For home page, query only the 'home' category (cat = 1)
+ */
+function delfino_get_home_posts($query) {
+	if ($query->is_home() && $query->is_main_query()) {
+		$query->set('cat', 1);
+	}
+}
+add_action( 'pre_get_posts', 'delfino_get_home_posts' );
