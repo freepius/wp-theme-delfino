@@ -58,8 +58,7 @@
         > button {
             display: initial;
             float: right;
-            background: none;
-            border: none;
+            @include button-as-link;
         }
     }
 }

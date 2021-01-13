@@ -1,0 +1,14 @@
+/************************************************
+ * STYLES FOR THE WORDPRESS CATEGORY PAGES
+ ***********************************************/
+
+body.category {
+    > header {
+        display: none;
+    }
+
+    > main > h2 {
+        font-size: 2.4em;
+        > a { text-decoration: none; }
+    }
+}

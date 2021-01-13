@@ -19,8 +19,7 @@
   "devDependencies": {
     "@wordpress/scripts": "^12.1.0",
     "dir-archiver": "^1.1.1",
-    "node-sass": "^4.14.1",
-    "normalize.css": "^8.0.1"
+    "node-sass": "^4.14.1"
   },
   "scripts": {
     "watch": "node-sass scss/ -o ./ --source-map true --output-style expanded --indent-type tab --indent-width 1 -w",
