@@ -18,11 +18,6 @@ if ( ! function_exists( 'delfino_setup' ) ) :
 
 		add_theme_support( 'automatic-feed-links' );
 		add_theme_support( 'title-tag' );
-		add_theme_support( 'post-thumbnails' );
-
-		register_nav_menus([
-			'main_menu' => esc_html__( 'Main menu', 'delfino' ),
-		]);
 
 		add_theme_support('html5', [
 			'search-form',
@@ -36,6 +31,10 @@ if ( ! function_exists( 'delfino_setup' ) ) :
 
 		add_theme_support('post-formats', [
 			'gallery'
+		]);
+
+		register_nav_menus([
+			'main_menu' => esc_html__( 'Main menu', 'delfino' ),
 		]);
 	}
 endif;
@@ -120,11 +119,18 @@ add_action( 'wp_ajax_nopriv_delfino_infinite_scroll', 'delfino_infinite_scroll' 
 
 
 /**
- * For home page, query only the 'home' category (cat = 1)
+ * -> For home page, query only the 'home' category (cat = 1).
+ * -> For archive page (including the category page), no posts limit.
  */
-function delfino_get_home_posts($query) {
-	if ($query->is_home() && $query->is_main_query()) {
+function delfino_get_posts($query) {
+	if (! $query->is_main_query()) {
+		return;
+	}
+
+	$query->set('posts_per_archive_page', -1);
+
+	if ($query->is_home()) {
 		$query->set('cat', 1);
 	}
 }
-add_action( 'pre_get_posts', 'delfino_get_home_posts' );
+add_action( 'pre_get_posts', 'delfino_get_posts' );
