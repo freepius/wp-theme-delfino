@@ -33,6 +33,10 @@ if ( ! function_exists( 'delfino_setup' ) ) :
 			'style',
 			'script',
 		]);
+
+		add_theme_support('post-formats', [
+			'gallery'
+		]);
 	}
 endif;
 add_action( 'after_setup_theme', 'delfino_setup' );
@@ -81,6 +85,11 @@ function delfino_scripts() {
 	if (is_home()) {
 		wp_enqueue_script( 'delfino-infinite-scroll', "$uri/js/infinite-scroll.js", [], DELFINO_VERSION, true );
 		wp_localize_script( 'delfino-infinite-scroll', 'ajaxurl', admin_url( 'admin-ajax.php' ) );
+	}
+
+	// javascript for the gallery posts management
+	if (is_single() && has_post_format('gallery')) {
+		wp_enqueue_script( 'delfino-gallery', "$uri/js/gallery.js", [], DELFINO_VERSION, true );
 	}
 }
 add_action( 'wp_enqueue_scripts', 'delfino_scripts' );

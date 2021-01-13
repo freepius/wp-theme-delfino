@@ -1,0 +1,20 @@
+@mixin link-bold {
+    text-decoration: none;
+    font-weight: 700;
+}
+
+@mixin button-as-text {
+    padding: 0;
+    background: none;
+    border: none;
+}
+
+@mixin button-as-link {
+    @include button-as-text;
+    cursor: pointer;
+
+    &:hover {
+        text-decoration: underline;
+        color: var(--color-primary);
+    }
+}
