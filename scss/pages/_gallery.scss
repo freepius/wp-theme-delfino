@@ -13,16 +13,14 @@
             object-fit: unset;
         }
 
-        &.active {
-           figcaption {
-               width: unset;
-               max-height: unset;
-               padding: unset;
-               background: unset;
-               color: unset;
-               text-align: unset;
-               font-size: unset;
-           }
+        figcaption {
+            width: unset;
+            max-height: unset;
+            padding: unset;
+            background: unset;
+            color: unset;
+            text-align: unset;
+            font-size: unset;
         }
     }
 }
@@ -132,20 +130,18 @@ body.single-format-gallery {
                     li {
                         img { margin: 0 auto; }
 
-                        &:not(.active) {
-                            display: none;
+                        // Do not use 'display: none;'
+                        // Otherwise the image is not loaded (until its first display)
+                        &.invisible {
+                            @include invisible;
                         }
 
-                        &.active {
-                            display: block;
-
-                            figcaption {
-                                position: absolute;
-                                display: initial;
-                                max-width: 20%;
-                                left: 30px;
-                                bottom: 120px;
-                            }
+                        figcaption {
+                            position: absolute;
+                            display: initial;
+                            max-width: 20%;
+                            left: 30px;
+                            bottom: 120px;
                         }
                     }
                 }

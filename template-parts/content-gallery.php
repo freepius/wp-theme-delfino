@@ -10,10 +10,10 @@ echo sprintf(
 <header>
     <h1><?= get_the_title() ?></h1>
     <nav>
-        <a role="button" data-view="gallery"
+        <a href="#" role="button" data-view="gallery"
             aria-label="Activate the gallery view (one photo by one photo)">Gallery</a>
         &nbsp;/&nbsp;
-        <a role="button" data-view="index"
+        <a href="#" role="button" data-view="index"
             aria-label="Activate the index view (a photo wall)">Index</a>
     </nav>
 </header>

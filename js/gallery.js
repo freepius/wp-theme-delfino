@@ -18,8 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function activatePhoto (photo) {
-    activePhoto?.classList.remove('active')
-    photo?.classList.add('active')
+    activePhoto?.classList.add('invisible')
+    photo?.classList.remove('invisible')
     activePhoto = photo
   }
 
@@ -35,13 +35,18 @@ document.addEventListener('DOMContentLoaded', () => {
     next: section.querySelector(':scope > nav > a[data-photo="next"]')
   }
 
-  // by default: display the first photo of the gallery view
+  // By default, all photos are displayed but invisible (ie we do not use 'display: none;' css rule).
+  // Therefore they are loaded early by the browser.
+  photos.forEach(photo => photo.classList.add('invisible'))
+
+  // By default: display the first photo of the gallery view
   activatePhoto(photos[0])
   activateView('gallery')
 
   for (const activator of Object.values(activators)) {
-    activator.addEventListener('click', () => {
+    activator.addEventListener('click', e => {
       activateView(activator.dataset.view)
+      e.preventDefault()
     })
   }
 
