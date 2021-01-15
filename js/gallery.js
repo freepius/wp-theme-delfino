@@ -23,6 +23,12 @@ document.addEventListener('DOMContentLoaded', () => {
     activePhoto = photo
   }
 
+  function getPhoto (direction) {
+    return (direction === 'prev' || direction === 'ArrowLeft')
+      ? activePhoto.previousElementSibling || photos[photos.length - 1] // if no previous photo -> go to the last one
+      : activePhoto.nextElementSibling || photos[0] // if no next photo -> go the the first one
+  }
+
   const main = document.querySelector('body > main')
   const section = main.querySelector(':scope > section')
   const photos = section.querySelectorAll('li.blocks-gallery-item')
@@ -35,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
     next: section.querySelector(':scope > nav > a[data-photo="next"]')
   }
 
-  // By default, all photos are displayed but invisible (ie we do not use 'display: none;' css rule).
+  // By default, all photos are displayed but invisible (ie, we do not use 'display: none;' css rule).
   // Therefore they are loaded early by the browser.
   photos.forEach(photo => photo.classList.add('invisible'))
 
@@ -51,12 +57,12 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   for (const nav of Object.values(navInPhotos)) {
-    const getPhoto = nav.dataset.photo === 'prev'
-      ? () => activePhoto.previousElementSibling || photos[photos.length - 1] // if no previous photo -> go to the last one
-      : () => activePhoto.nextElementSibling || photos[0] // if no next photo -> go the the first one
-
-    nav.addEventListener('click', () => activatePhoto(getPhoto()))
+    nav.addEventListener('click', () => activatePhoto(getPhoto(nav.dataset.photo)))
   }
+
+  document.addEventListener('keyup', (e) =>
+    e.key === 'ArrowLeft' || e.key === 'ArrowRight' ? activatePhoto(getPhoto(e.key)) : null
+  )
 
   for (const photo of photos) {
     photo.addEventListener('click', () => {
