@@ -25,6 +25,9 @@
     }
 }
 
+// CSS selector for the gallery 'other content' (serving as description)
+$other-content: ':not(nav):not(figure.wp-block-gallery)';
+
 body.single-format-gallery {
     > header, > nav {
         display: none;
@@ -73,44 +76,61 @@ body.single-format-gallery {
             }
         }
 
-        // Part containing the photos gallery and eventual complementary texts/contents
+        // Part containing the photos gallery and eventual complementary contents
         > section {
             grid-area: c;
+            display: grid;
+            justify-items: center;
+            height: 100%;
+            overflow-y: auto;
 
-            // By default, complementary texts/contents are hidden
-            > * { display: none; }
+            > #{$other-content} {
+                max-width: 800px;
+                margin: 1rem auto;
+            }
 
             // The photos gallery
             > figure.wp-block-gallery {
-                height: 100%;
                 padding-right: 32px;
                 figcaption { display: none; }
             }
 
             // Styles for the INDEX view
-            &.index > figure.wp-block-gallery {
-                display: flex;
-                overflow-y: auto;
+            &.index {
+                // Complementary contents are always displayed (after the photos)
+                > #{$other-content} {
+                    display: block !important;
+                }
 
-                li {
-                    &:hover {
-                        opacity: .5;
-                        cursor: pointer;
+                > figure.wp-block-gallery {
+                    grid-row: 1 / 2;
+                    display: flex;
+
+                    li {
+                        &:hover {
+                            opacity: .5;
+                            cursor: pointer;
+                        }
                     }
                 }
             }
 
             // Styles for the GALLERY view
             &.gallery {
+                // Complementary contents are hidden by default
+                > #{$other-content} {
+                    display: none;
+                }
+
                 // 2 links allowing to display the previous and next photos
                 > nav {
                     position: absolute;
                     display: grid;
                     grid-template-columns: 1fr 1fr;
-                    width: 80%;
+                    width: calc(80% - 50px);
                     height: 100%;
                     top: 0;
-                    right: 0;
+                    right: 20px;
                     z-index: 1000;
 
                     > a {
@@ -128,6 +148,7 @@ body.single-format-gallery {
                     @include wp-gallery-styles-unset;
 
                     li {
+                        margin: 0;
                         img { margin: 0 auto; }
 
                         // Do not use 'display: none;'

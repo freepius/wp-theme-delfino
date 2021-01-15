@@ -1,44 +1,92 @@
 /**
- * Manage the gallery and index views for the WordPress gallery posts.
+ * Manage the WordPress gallery posts.
  */
 document.addEventListener('DOMContentLoaded', () => {
-  let currentView, activePhoto
-
-  function isIndexView () {
-    return section.classList.contains('index')
-  }
-
-  function activateView (view) {
-    activators[currentView]?.classList.remove('active')
-    section.classList.remove(currentView)
-
-    activators[view]?.classList.add('active')
-    section.classList.add(view)
-    currentView = view
-  }
-
-  function activatePhoto (photo) {
-    activePhoto?.classList.add('invisible')
-    photo?.classList.remove('invisible')
-    activePhoto = photo
-  }
-
-  function getPhoto (direction) {
-    return (direction === 'prev' || direction === 'ArrowLeft')
-      ? activePhoto.previousElementSibling || photos[photos.length - 1] // if no previous photo -> go to the last one
-      : activePhoto.nextElementSibling || photos[0] // if no next photo -> go the the first one
-  }
+  let activeView, activeItem
 
   const main = document.querySelector('body > main')
   const section = main.querySelector(':scope > section')
+
+  // A gallery is composed by photos and eventual other content (serving as description)
   const photos = section.querySelectorAll('li.blocks-gallery-item')
+  const otherContent = section.querySelectorAll(':scope > :not(nav):not(figure.wp-block-gallery)')
+
+  // Elements to activate the gallery views
   const activators = {
-    gallery: main.querySelector(':scope > header > nav > a[data-view="gallery"]'),
-    index: main.querySelector(':scope > header > nav > a[data-view="index"]')
+    gallery: main.querySelector('[data-view="gallery"]'),
+    index: main.querySelector('[data-view="index"]')
   }
-  const navInPhotos = {
-    prev: section.querySelector(':scope > nav > a[data-photo="prev"]'),
-    next: section.querySelector(':scope > nav > a[data-photo="next"]')
+
+  // Elements to navigate in the gallery items
+  const navInItems = {
+    prev: section.querySelector('[data-photo="prev"]'),
+    next: section.querySelector('[data-photo="next"]')
+  }
+
+  function isActiveView (view) {
+    return section.classList.contains(view)
+  }
+
+  /**
+   * Activate one of 2 views of the gallery: either 'gallery' or 'index'
+   *
+   * @param {string} view
+   */
+  function activateView (view) {
+    activators[activeView]?.classList.remove('active')
+    section.classList.remove(activeView)
+
+    activators[view]?.classList.add('active')
+    section.classList.add(view)
+    activeView = view
+  }
+
+  /**
+   * Determine if a given item is a gallery's photo or not.
+   */
+  function isPhoto (item) {
+    return item?.classList?.contains('blocks-gallery-item')
+  }
+
+  /**
+   * Depending on a given direction, get the direct sibling of the active photo.
+   * We considirer the gallery as a loop, ie:
+   *   - the last's next is the first
+   *   - the first's previous is the last
+   *
+   * Important: in addition to photos, if the WordPress post has other content, this is consider as the last item.
+   *
+   * @param {string} direction Must be: prev, next, ArrowLeft or ArrowRight
+   */
+  function getItemSibling (direction) {
+    return (direction === 'prev' || direction === 'ArrowLeft')
+      ? (isPhoto(activeItem) ? activeItem.previousElementSibling || otherContent : null) || photos[photos.length - 1]
+      : (isPhoto(activeItem) ? activeItem.nextElementSibling || otherContent : null) || photos[0]
+  }
+
+  /**
+   * Activate an item of the photos gallery:
+   *   - either a photo (of course)
+   *   - or the other content (serving as gallery description)
+   *
+   * @param {string|HTMLElement|HTMLElement[]} item If item is of type string, get first the associated Element.
+   */
+  function activateItem (item) {
+    if (typeof item === 'string') {
+      item = getItemSibling(item)
+    }
+
+    // Hide the current active item
+    isPhoto(activeItem)
+      ? activeItem.classList.add('invisible')
+      : activeItem?.forEach(e => { e.style.display = 'none' })
+
+    // Display the new active item
+    isPhoto(item)
+      ? item.classList.remove('invisible')
+      : item.forEach(e => { e.style.display = 'block' })
+
+    activeItem = item
   }
 
   // By default, all photos are displayed but invisible (ie, we do not use 'display: none;' css rule).
@@ -46,9 +94,10 @@ document.addEventListener('DOMContentLoaded', () => {
   photos.forEach(photo => photo.classList.add('invisible'))
 
   // By default: display the first photo of the gallery view
-  activatePhoto(photos[0])
+  activateItem(photos[0])
   activateView('gallery')
 
+  // Manage activators for the gallery views
   for (const activator of Object.values(activators)) {
     activator.addEventListener('click', e => {
       activateView(activator.dataset.view)
@@ -56,18 +105,23 @@ document.addEventListener('DOMContentLoaded', () => {
     })
   }
 
-  for (const nav of Object.values(navInPhotos)) {
-    nav.addEventListener('click', () => activatePhoto(getPhoto(nav.dataset.photo)))
+  // Manage the 'click' navigation in the gallery items
+  for (const nav of Object.values(navInItems)) {
+    nav.addEventListener('click', () => activateItem(nav.dataset.photo))
   }
 
-  document.addEventListener('keyup', (e) =>
-    e.key === 'ArrowLeft' || e.key === 'ArrowRight' ? activatePhoto(getPhoto(e.key)) : null
-  )
+  // On 'gallery' view only, manage the 'key press' navigation in the gallery items
+  document.addEventListener('keyup', (e) => {
+    if (isActiveView('gallery') && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) {
+      activateItem(e.key)
+    }
+  })
 
+  // On 'index' view only, a click on photo displays it in the 'gallery' view
   for (const photo of photos) {
     photo.addEventListener('click', () => {
-      if (isIndexView()) {
-        activatePhoto(photo)
+      if (isActiveView('index')) {
+        activateItem(photo)
         activateView('gallery')
       }
     })

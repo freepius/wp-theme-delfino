@@ -19,9 +19,9 @@ echo sprintf(
 </header>
 
 <section>
-    <?php the_content(); ?>
     <nav>
         <a role="button" data-photo="prev" aria-label="Display the previous photo"></a>
         <a role="button" data-photo="next" aria-label="Display the next photo"></a>
     </nav>
+    <?php the_content(); ?>
 </section>

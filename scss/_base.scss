@@ -40,3 +40,7 @@ a {
 a:hover {
     color: var(--color-primary);
 }
+
+.wp-block-image img {
+    height: auto;
+}
