@@ -11,11 +11,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const photos = section.querySelectorAll('li.blocks-gallery-item')
   const otherContent = section.querySelectorAll(':scope > :not(nav):not(figure.wp-block-gallery)')
 
-  // Elements to activate the gallery views
-  const activators = {
-    gallery: main.querySelector('[data-view="gallery"]'),
-    index: main.querySelector('[data-view="index"]')
-  }
+  // Elements to activate the different gallery views
+  const activators = {}
+  main.querySelectorAll('[data-view]').forEach(e => {
+    if (e.dataset.view === 'description' && otherContent.length === 0) {
+      e.remove()
+      return
+    }
+
+    activators[e.dataset.view] = e
+  })
 
   // Elements to navigate in the gallery items
   const navInItems = {
@@ -34,10 +39,15 @@ document.addEventListener('DOMContentLoaded', () => {
    */
   function activateView (view) {
     activators[activeView]?.classList.remove('active')
-    section.classList.remove(activeView)
+    activeView === 'description'
+      ? section.classList.remove('gallery') || activateItem(photos[0])
+      : section.classList.remove(activeView)
 
     activators[view]?.classList.add('active')
-    section.classList.add(view)
+    view === 'description'
+      ? section.classList.add('gallery') || activateItem(otherContent)
+      : section.classList.add(view)
+
     activeView = view
   }
 
@@ -98,9 +108,9 @@ document.addEventListener('DOMContentLoaded', () => {
   activateView('gallery')
 
   // Manage activators for the gallery views
-  for (const activator of Object.values(activators)) {
+  for (const [view, activator] of Object.entries(activators)) {
     activator.addEventListener('click', e => {
-      activateView(activator.dataset.view)
+      activateView(view)
       e.preventDefault()
     })
   }

@@ -12,9 +12,12 @@ echo sprintf(
     <nav>
         <a href="#" role="button" data-view="gallery"
             aria-label="Activate the gallery view (one photo by one photo)">Gallery</a>
-        &nbsp;/&nbsp;
+
         <a href="#" role="button" data-view="index"
             aria-label="Activate the index view (a photo wall)">Index</a>
+
+        <a href="#" role="button" data-view="description"
+            aria-label="Display the gallery description">Description</a>
     </nav>
 </header>
 
