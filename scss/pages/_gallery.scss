@@ -110,14 +110,12 @@ body.single-format-gallery {
                 }
 
                 > figure.wp-block-gallery {
-                    grid-row: 1 / 2;
+                    grid-row: 1 / 2; // <-- the photos gallery is displayed first
                     display: flex;
 
-                    li {
-                        &:hover {
-                            opacity: .5;
-                            cursor: pointer;
-                        }
+                    li:hover {
+                        opacity: .5;
+                        cursor: pointer;
                     }
                 }
             }
@@ -137,7 +135,7 @@ body.single-format-gallery {
                     width: calc(80% - 50px);
                     height: 100%;
                     top: 0;
-                    right: 20px;
+                    right: 20px; // <-- allow to not cover the scroll bar
                     z-index: 1000;
 
                     > a {

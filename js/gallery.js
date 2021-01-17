@@ -9,18 +9,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // A gallery is composed by photos and eventual other content (serving as description)
   const photos = section.querySelectorAll('li.blocks-gallery-item')
-  const otherContent = section.querySelectorAll(':scope > :not(nav):not(figure.wp-block-gallery)')
+  let otherContent = section.querySelectorAll(':scope > :not(nav):not(figure.wp-block-gallery)')
+  otherContent.length === 0 && (otherContent = null)
 
   // Elements to activate the different gallery views
   const activators = {}
-  main.querySelectorAll('[data-view]').forEach(e => {
-    if (e.dataset.view === 'description' && otherContent.length === 0) {
-      e.remove()
-      return
-    }
-
-    activators[e.dataset.view] = e
-  })
+  main.querySelectorAll('[data-view]').forEach(e => { activators[e.dataset.view] = e })
+  !otherContent && (activators.description.remove() || delete (activators.description))
 
   // Elements to navigate in the gallery items
   const navInItems = {
@@ -33,23 +28,42 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /**
-   * Activate one of 2 views of the gallery: either 'gallery' or 'index'
+   * Activate one of 3 views of the gallery:
+   *   - 'index' view displays all photos, in a grid
+   *   - 'gallery' view displays them one by one, as a slideshow
+   *   - 'description' view displays the gallery description (ie, the otherContent html elements)
    *
-   * @param {string} view
+   * @param {string} view Must be 'index', 'gallery' or 'description'
+   * @param {boolean} alsoActivateItem If true, call activateItem() on the appropriate item
    */
-  function activateView (view) {
-    activators[activeView]?.classList.remove('active')
-    activeView === 'description'
-      ? section.classList.remove('gallery') || activateItem(photos[0])
-      : section.classList.remove(activeView)
+  const activateView = otherContent
+    ? function (view, alsoActivateItem = true) {
+        if (view === activeView) return
 
-    activators[view]?.classList.add('active')
-    view === 'description'
-      ? section.classList.add('gallery') || activateItem(otherContent)
-      : section.classList.add(view)
+        activators[activeView]?.classList.remove('active')
+        activeView === 'description'
+          ? section.classList.remove('gallery') ?? (alsoActivateItem && activateItem(photos[0], false))
+          : section.classList.remove(activeView)
 
-    activeView = view
-  }
+        activators[view]?.classList.add('active')
+        view === 'description'
+          ? section.classList.add('gallery') ?? (alsoActivateItem && activateItem(otherContent, false))
+          : section.classList.add(view)
+
+        activeView = view
+      }
+    // Simpler function if no other content
+    : function (view) {
+      if (view === activeView) return
+
+      activators[activeView]?.classList.remove('active')
+      section.classList.remove(activeView)
+
+      activators[view]?.classList.add('active')
+      section.classList.add(view)
+
+      activeView = view
+    }
 
   /**
    * Determine if a given item is a gallery's photo or not.
@@ -68,11 +82,14 @@ document.addEventListener('DOMContentLoaded', () => {
    *
    * @param {string} direction Must be: prev, next, ArrowLeft or ArrowRight
    */
-  function getItemSibling (direction) {
-    return (direction === 'prev' || direction === 'ArrowLeft')
-      ? (isPhoto(activeItem) ? activeItem.previousElementSibling || otherContent : null) || photos[photos.length - 1]
-      : (isPhoto(activeItem) ? activeItem.nextElementSibling || otherContent : null) || photos[0]
-  }
+  const getItemSibling = otherContent
+    ? (direction) => (direction === 'prev' || direction === 'ArrowLeft')
+        ? (isPhoto(activeItem) ? activeItem.previousElementSibling ?? otherContent : null) ?? photos[photos.length - 1]
+        : (isPhoto(activeItem) ? activeItem.nextElementSibling ?? otherContent : null) ?? photos[0]
+    // Simpler function if no other content
+    : (direction) => (direction === 'prev' || direction === 'ArrowLeft')
+        ? activeItem.previousElementSibling ?? photos[photos.length - 1]
+        : activeItem.nextElementSibling ?? photos[0]
 
   /**
    * Activate an item of the photos gallery:
@@ -80,24 +97,32 @@ document.addEventListener('DOMContentLoaded', () => {
    *   - or the other content (serving as gallery description)
    *
    * @param {string|HTMLElement|HTMLElement[]} item If item is of type string, get first the associated Element.
+   * @param {boolean} alsoActivateView If true, call activateView() with the appropriate view
    */
-  function activateItem (item) {
-    if (typeof item === 'string') {
-      item = getItemSibling(item)
+  const activateItem = otherContent
+    ? function (item, alsoActivateView = true) {
+        typeof item === 'string' && (item = getItemSibling(item))
+
+        // Hide the current active item
+        isPhoto(activeItem)
+          ? activeItem.classList.add('invisible')
+          : activeItem?.forEach(e => { e.style.display = 'none' })
+
+        // Display the new active item
+        isPhoto(item)
+          ? item.classList.remove('invisible') ?? (alsoActivateView && activateView('gallery', false))
+          : item.forEach(e => { e.style.display = 'block' }) ?? (alsoActivateView && activateView('description', false))
+
+        activeItem = item
+      }
+    // Simpler function if no other content
+    : function (item) {
+      typeof item === 'string' && (item = getItemSibling(item))
+      activeItem.classList.add('invisible')
+      item.classList.remove('invisible')
+      activateView('gallery')
+      activeItem = item
     }
-
-    // Hide the current active item
-    isPhoto(activeItem)
-      ? activeItem.classList.add('invisible')
-      : activeItem?.forEach(e => { e.style.display = 'none' })
-
-    // Display the new active item
-    isPhoto(item)
-      ? item.classList.remove('invisible')
-      : item.forEach(e => { e.style.display = 'block' })
-
-    activeItem = item
-  }
 
   // By default, all photos are displayed but invisible (ie, we do not use 'display: none;' css rule).
   // Therefore they are loaded early by the browser.
@@ -105,7 +130,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // By default: display the first photo of the gallery view
   activateItem(photos[0])
-  activateView('gallery')
 
   // Manage activators for the gallery views
   for (const [view, activator] of Object.entries(activators)) {
@@ -132,7 +156,6 @@ document.addEventListener('DOMContentLoaded', () => {
     photo.addEventListener('click', () => {
       if (isActiveView('index')) {
         activateItem(photo)
-        activateView('gallery')
       }
     })
   }
