@@ -8,7 +8,7 @@
  */
 
 if ( ! defined( 'DELFINO_VERSION' ) ) {
-	define( 'DELFINO_VERSION', '1.0.0' );
+	define( 'DELFINO_VERSION', '1.0.1' );
 }
 
 
@@ -133,4 +133,4 @@ function delfino_get_posts($query) {
 		$query->set('cat', 1);
 	}
 }
-add_action( 'pre_get_posts', 'delfino_get_posts' );
+add_action( 'pre_get_posts', 'delfino_get_posts' );add_action( 'pre_get_posts', 'delfino_get_posts' );

@@ -87,7 +87,8 @@ body.single-format-gallery {
         > section {
             grid-area: c;
             display: grid;
-            justify-items: center;
+            justify-content: center;
+            align-content: start;
             height: 100%;
             overflow-y: auto;
 
@@ -154,7 +155,11 @@ body.single-format-gallery {
 
                     li {
                         margin: 0;
-                        img { margin: 0 auto; }
+
+                        img {
+                            height: 100%;
+                            margin: 0 auto;
+                        }
 
                         // Do not use 'display: none;'
                         // Otherwise the image is not loaded (until its first display)
