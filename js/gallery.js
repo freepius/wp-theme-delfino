@@ -51,9 +51,13 @@ document.addEventListener('DOMContentLoaded', () => {
     activators[view].classList.add('active')
     section.classList.add(view)
 
+    activeView = view
+
+    // Display the photo legend only on 'gallery' view
     activePhotoLegend.style.display = view === 'gallery' ? 'block' : 'none'
 
-    activeView = view
+    // On 'gallery' view activation, if no photo is active => activate the first one
+    view === 'gallery' && !isPhoto(activeItem) && activateItem(photos[0])
   }
 
   /**
@@ -92,6 +96,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Hide the current active photo (if there is)
     activeItem?.classList?.add('invisible')
 
+    activeItem = item
+
     if (isPhoto(item)) {
       // Display the new active photo, its legend and the 'gallery' view
       item.classList.remove('invisible')
@@ -100,8 +106,6 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       activateView('description')
     }
-
-    activeItem = item
   }
 
   // By default, all photos are displayed but invisible (ie, we do not use 'display: none;' css rule).
