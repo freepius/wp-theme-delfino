@@ -56,15 +56,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // Display the photo legend only on 'gallery' view
     activePhotoLegend.style.display = view === 'gallery' ? 'block' : 'none'
 
-    // On 'gallery' view activation, if no photo is active => activate the first one
-    view === 'gallery' && !isPhoto(activeItem) && activateItem(photos[0])
+    if (view === 'gallery') {
+      // on 'gallery' view, if no active photo => activate the first one
+      !isPhoto(activeItem) && activateItem(photos[0])
+    } else {
+      // on 'description' or 'index' views => reset active item to the gallery description
+      setActiveItem(true)
+    }
   }
 
   /**
    * Determine if a given item is a gallery's photo or not.
    */
   function isPhoto (item) {
-    return item !== true
+    return item !== true && item !== undefined
   }
 
   /**
@@ -76,6 +81,8 @@ document.addEventListener('DOMContentLoaded', () => {
    * Important: in addition to photos, if the WordPress post has other content, this is consider as the last item.
    *
    * @param {string} direction Must be: prev, next, ArrowLeft or ArrowRight
+   *
+   * @return {boolean|HTMLElement} Return TRUE for the desscription (ie, other element) or HTMLElement for a photo
    */
   function getItemSibling (direction) {
     return (direction === 'prev' || direction === 'ArrowLeft')
@@ -84,23 +91,27 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /**
+   * @param {boolean|HTMLElement} item
+   */
+  function setActiveItem (item) {
+    activeItem?.classList?.add('invisible') // Hide current active item
+    item?.classList?.remove('invisible') // Display new one
+    activeItem = item
+  }
+
+  /**
    * Activate an item of the photos gallery:
    *   - either a photo (of course)
    *   - or the other content (serving as gallery description)
    *
-   * @param {string|HTMLElement|HTMLElement[]} item If item is of type string, get first the associated Element.
+   * @param {string|HTMLElement} item If item is of type string, get first the associated Element.
    */
   function activateItem (item) {
     typeof item === 'string' && (item = getItemSibling(item))
 
-    // Hide the current active photo (if there is)
-    activeItem?.classList?.add('invisible')
-
-    activeItem = item
+    setActiveItem(item)
 
     if (isPhoto(item)) {
-      // Display the new active photo, its legend and the 'gallery' view
-      item.classList.remove('invisible')
       activePhotoLegend.innerHTML = item.querySelector('figcaption')?.innerHTML ?? ''
       activateView('gallery')
     } else {
