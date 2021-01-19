@@ -7,8 +7,9 @@
  * @package Delfino
  */
 
+// Version is also to update in: style.css, readme.txt, package.json
 if ( ! defined( 'DELFINO_VERSION' ) ) {
-	define( 'DELFINO_VERSION', '1.0.1' );
+	define( 'DELFINO_VERSION', '1.0.2' );
 }
 
 
