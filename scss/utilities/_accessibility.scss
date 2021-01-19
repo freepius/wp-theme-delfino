@@ -1,6 +1,6 @@
 /* Text meant only for screen readers. */
 .screen-reader-text {
-    @include invisible;
+    @extend %invisible;
 
     &:focus {
         border-radius: 3px;

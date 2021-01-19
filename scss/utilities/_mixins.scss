@@ -19,6 +19,14 @@
     }
 }
 
+@mixin list-inline {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    > li { display: inline; }
+}
+
+// Is invisible but stays readable by screen readers
 @mixin invisible {
 	border: 0;
 	clip: rect(1px, 1px, 1px, 1px);

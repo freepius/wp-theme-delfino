@@ -44,6 +44,12 @@ body.single-format-gallery {
         grid-template-rows: 50% 50%;
         grid-template-areas: "a c" "b c";
 
+        @media (max-width: 1000px) {
+            grid-template-columns: 100%;
+            grid-template-rows: auto 1fr 1fr auto;
+            grid-template-areas: "a" "c" "c" "b";
+        }
+
         // The "back to category" link
         > a#back-to-category {
             grid-area: a;
@@ -53,32 +59,34 @@ body.single-format-gallery {
             &::before { content: '< '; }
         }
 
-        // Part containing the gallery name (<h1>)
-        // and 2 links allowing to switch between gallery and index views.
+        // Part containing <h1> gallery name, <h2> active photo legend and <a> gallery view activators
         > header {
             grid-area: b;
             align-self: end;
 
-            > h1 { font-size: 1em; }
+            > h1, > h2 { font-size: 1em; }
+            > h2 { font-weight: 400; }
 
-            > nav > a {
-                &.active {
-                    font-weight: 700;
-                    &:hover {
-                        color: inherit;
-                        cursor: default;
-                    }
-                }
+            > ul {
+                @include list-inline;
 
-                &:not(.active) {
-                    text-decoration: none;
-                }
-
-                &:not(:first-of-type)::before {
+                > li:not(:first-of-type)::before  {
                     content: '|';
                     margin: 0 10px;
-                    text-decoration: none !important;
-                    cursor: initial;
+                }
+
+                a {
+                    &.active {
+                        font-weight: 700;
+                        &:hover {
+                            color: inherit;
+                            cursor: default;
+                        }
+                    }
+
+                    &:not(.active) {
+                        text-decoration: none;
+                    }
                 }
             }
         }
@@ -92,26 +100,51 @@ body.single-format-gallery {
             height: 100%;
             overflow-y: auto;
 
+            // Other content of the WordPress post (serving as gallery description)
             > #{$other-content} {
-                max-width: 800px;
+                max-width: $breakpoint-sm;
                 margin: 1rem auto;
             }
 
             // The photos gallery
             > figure.wp-block-gallery {
-                padding-right: 32px;
-                figcaption { display: none; }
+                padding-right: 30px;
+                figcaption { @extend %invisible; }
+            }
+
+            // Links allowing to navigate through photos and gallery description
+            &.description > nav,
+            &.gallery > nav {
+                position: absolute;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                width: calc(80% - 50px);
+                height: 100%;
+                top: 0;
+                right: 20px; // <-- allow to not cover the scroll bar
+                z-index: 1000;
+
+                > a {
+                    &[data-photo="prev"] { cursor: w-resize; }
+                    &[data-photo="next"] { cursor: e-resize; }
+                }
+            }
+
+            // Styles for the DESCRIPTION view
+            &.description {
+                > figure.wp-block-gallery {
+                    display: none;
+                }
             }
 
             // Styles for the INDEX view
             &.index {
-                // Complementary contents are always displayed (after the photos)
-                > #{$other-content} {
-                    display: block !important;
+                > nav{
+                    display: none;
                 }
 
                 > figure.wp-block-gallery {
-                    grid-row: 1 / 2; // <-- the photos gallery is displayed first
+                    grid-row: 1 / 2; // <-- gallery is displayed before other content
                     display: flex;
 
                     li:hover {
@@ -123,26 +156,8 @@ body.single-format-gallery {
 
             // Styles for the GALLERY view
             &.gallery {
-                // Complementary contents are hidden by default
                 > #{$other-content} {
                     display: none;
-                }
-
-                // 2 links allowing to display the previous and next photos
-                > nav {
-                    position: absolute;
-                    display: grid;
-                    grid-template-columns: 1fr 1fr;
-                    width: calc(80% - 50px);
-                    height: 100%;
-                    top: 0;
-                    right: 20px; // <-- allow to not cover the scroll bar
-                    z-index: 1000;
-
-                    > a {
-                        &[data-photo="prev"] { cursor: w-resize; }
-                        &[data-photo="next"] { cursor: e-resize; }
-                    }
                 }
 
                 > figure.wp-block-gallery {
@@ -164,15 +179,7 @@ body.single-format-gallery {
                         // Do not use 'display: none;'
                         // Otherwise the image is not loaded (until its first display)
                         &.invisible {
-                            @include invisible;
-                        }
-
-                        figcaption {
-                            position: absolute;
-                            display: initial;
-                            max-width: 20%;
-                            left: 30px;
-                            bottom: 120px;
+                            @extend %invisible;
                         }
                     }
                 }
