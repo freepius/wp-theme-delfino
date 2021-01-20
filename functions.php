@@ -9,7 +9,7 @@
 
 // Version is also to update in: style.css, readme.txt, package.json
 if ( ! defined( 'DELFINO_VERSION' ) ) {
-	define( 'DELFINO_VERSION', '1.0.2' );
+	define( 'DELFINO_VERSION', '1.1.0' );
 }
 
 
@@ -116,7 +116,7 @@ function delfino_infinite_scroll() {
 
 	while ($query->have_posts()) {
 		$query->the_post();
-		get_template_part( 'template-parts/content', get_post_type() );
+		get_template_part( 'inc/template-parts/content', get_post_type() );
 	}
 
 	wp_die();

@@ -13,7 +13,8 @@ module.exports = {
     link: pkg.homepage,
     version: pkg.version,
     copyrightText:
-      `${pkg.description}\n\nThis software is released under the GPL-3.0 License\nhttps://opensource.org/licenses/GPL-3.0`
+      `${pkg.description}\n\nThis software is released under the GPL-3.0 License\nhttps://opensource.org/licenses/GPL-3.0`,
+    credit: false
   },
   // Files we need to compile, and where to put
   files: [{
