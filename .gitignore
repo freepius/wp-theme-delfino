@@ -22,3 +22,6 @@ node_modules/
 *.log
 *.sql
 *.sqlite
+
+# ignore some dev files
+wpackio.server.js

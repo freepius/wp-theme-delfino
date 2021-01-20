@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
   main.querySelectorAll('[data-view]').forEach(e => { activators[e.dataset.view] = e })
 
   // if no other content => delete the 'description' activator
-  hasOtherContent || activators.description.remove() || delete activators.description
+  hasOtherContent || activators.description.parentElement.remove() || delete activators.description
 
   // Elements to navigate in the gallery items
   const navInItems = {

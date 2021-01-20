@@ -76,20 +76,26 @@ add_action( 'widgets_init', 'delfino_widgets_init' );
  * Enqueue scripts and styles.
  */
 function delfino_scripts() {
+	require_once __DIR__ . '/vendor/autoload.php';
+	$enqueue = new \WPackio\Enqueue( 'delfino', 'dist', DELFINO_VERSION, 'theme', false );
+
 	$uri = get_template_directory_uri();
 
+	// Enqueue the style.css file
 	wp_enqueue_style( 'delfino-style', get_stylesheet_uri(), [], DELFINO_VERSION );
-	wp_enqueue_script( 'delfino-main', "$uri/js/main.js", [], DELFINO_VERSION, true );
+
+	// main css and javascript (used in all theme pages)
+	$enqueue->enqueue('app', 'main', []);
 
 	// javascript for the home page 'infinite scroll' effect
 	if (is_home()) {
-		wp_enqueue_script( 'delfino-infinite-scroll', "$uri/js/infinite-scroll.js", [], DELFINO_VERSION, true );
-		wp_localize_script( 'delfino-infinite-scroll', 'ajaxurl', admin_url( 'admin-ajax.php' ) );
+		$assets = $enqueue->enqueue('app', 'infinite-scroll', []);
+		wp_localize_script($assets['js'][0]['handle'], 'ajaxurl', admin_url( 'admin-ajax.php' ));
 	}
 
 	// javascript for the gallery posts management
 	if (is_single() && has_post_format('gallery')) {
-		wp_enqueue_script( 'delfino-gallery', "$uri/js/gallery.js", [], DELFINO_VERSION, true );
+		$enqueue->enqueue('app', 'gallery', []);
 	}
 }
 add_action( 'wp_enqueue_scripts', 'delfino_scripts' );

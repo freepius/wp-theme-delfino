@@ -1,14 +1,14 @@
 {
   "name": "delfino",
   "version": "1.0.2",
-  "description": "WordPress theme for the photographer Claire Delfino website",
   "author": "freepius",
   "license": "GPL-3.0",
+  "description": "WordPress theme for the photographer Claire Delfino website",
   "keywords": [
     "WordPress",
     "Theme"
   ],
-  "homepage": "https://github.com/freepius/wp-theme-delfino#README",
+  "homepage": "https://github.com/freepius/wp-theme-delfino",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/freepius/wp-theme-delfino.git"
@@ -17,15 +17,16 @@
     "url": "https://github.com/freepius/wp-theme-delfino/issues"
   },
   "devDependencies": {
-    "@wordpress/scripts": "^12.1.0",
-    "dir-archiver": "^1.1.1",
-    "node-sass": "^4.14.1"
+    "@wpackio/scripts": "^5.0.0",
+    "sass": "^1.32.4"
   },
   "scripts": {
-    "watch": "node-sass scss/ -o ./ --source-map true --output-style expanded --indent-type tab --indent-width 1 -w",
-    "compile:css": "node-sass scss/ -o ./ && stylelint '*.css' --fix || true && stylelint '*.css' --fix",
-    "lint:scss": "wp-scripts lint-style 'scss/**/*.scss'",
-    "lint:js": "wp-scripts lint-js 'js/*.js'",
-    "bundle": "dir-archiver --src . --dest delfino.zip --exclude .DS_Store .stylelintrc.json .eslintrc .git .gitattributes .github .gitignore README.md composer.json composer.lock node_modules vendor package-lock.json package.json yarn.lock .travis.yml phpcs.xml.dist scss style.css.map"
+    "bootstrap": "wpackio-scripts bootstrap",
+    "build": "wpackio-scripts build",
+    "start": "wpackio-scripts start",
+    "archive": "wpackio-scripts pack"
+  },
+  "dependencies": {
+    "@wpackio/entrypoint": "^5.0.0"
   }
 }
