@@ -52,13 +52,17 @@ module.exports = {
   // Supports glob matching from minimatch
   // @link <https://github.com/isaacs/minimatch#usage>
   packageFiles: [
+    'inc/**',
+    'vendor/**',
     'dist/**',
+    'languages/**',
+    'layouts/**',
     '*.php',
     '*.md',
     'readme.txt',
-    'inc/**',
     'LICENSE',
-    '*.css'
+    '*.css',
+    '!*.yml'
   ],
   // Path to package directory, relative to the root
   packageDirPath: 'package'
