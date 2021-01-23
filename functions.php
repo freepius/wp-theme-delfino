@@ -9,7 +9,7 @@
 
 // Version is also to update in: style.css, readme.txt, package.json
 if ( ! defined( 'DELFINO_VERSION' ) ) {
-	define( 'DELFINO_VERSION', '1.1.0' );
+	define( 'DELFINO_VERSION', '1.1.1' );
 }
 
 
