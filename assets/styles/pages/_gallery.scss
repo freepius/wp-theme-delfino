@@ -10,7 +10,6 @@
 
         img {
             width: unset;
-            object-fit: unset;
         }
 
         figcaption {
@@ -31,13 +30,23 @@ $other-content: ':not(nav):not(.wp-block-gallery)';
 body.single-format-gallery {
     margin: 30px;
 
+    // Remove the 'admin bar' height from <main>
+    --admin-bar-height: 0px;
+    &.admin-bar {
+        --admin-bar-height: 32px;
+
+        @media (max-width: 782px) {
+            --admin-bar-height: 46px;
+        }
+    }
+
     > header, > nav {
         display: none;
     }
 
     > main {
         max-width: 2000px;
-        height: calc(100vh - 92px);
+        height: calc(100vh - 60px - var(--admin-bar-height));
         padding: 0;
         position: relative;
 
@@ -137,12 +146,20 @@ body.single-format-gallery {
                 }
 
                 > figure.wp-block-gallery {
-                    grid-row: 1 / 2; // <-- gallery is displayed before other content
+                    grid-row: 1 / 2; // gallery is displayed before other content
                     display: flex;
 
-                    li:hover {
-                        opacity: .5;
-                        cursor: pointer;
+                    li {
+                        flex-grow: unset; // extra items take a normal width (and not all the remaining width)
+
+                        &:hover {
+                            opacity: .5;
+                            cursor: pointer;
+                        }
+
+                        > figure {
+                            align-items: center;
+                        }
                     }
                 }
             }
@@ -167,6 +184,7 @@ body.single-format-gallery {
                         img {
                             height: 100%;
                             margin: 0 auto;
+                            object-fit: contain;
                         }
 
                         // Do not use 'display: none;'
@@ -197,7 +215,6 @@ body.single-format-gallery {
             display: grid;
             grid-template-rows: 1fr auto;
             row-gap: 1rem;
-            height: calc(100vh - 106px);
 
             > a#back-to-category {
                 top: -20px;

@@ -5,7 +5,7 @@
  body > header {
     max-width: 100%;
     display: grid;
-    grid-template-columns: minmax(max-content, var(--page-max-width));
+    grid-template-columns: minmax(auto, var(--page-max-width));
     justify-content: center;
 
     background-color: var(--color-primary);
