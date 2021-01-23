@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // A gallery is composed by photos and eventual other content (serving as description)
   const photos = section.querySelectorAll('li.blocks-gallery-item')
-  const hasOtherContent = section.querySelectorAll(':scope > :not(nav):not(figure.wp-block-gallery)').length > 0
+  const hasOtherContent = section.querySelectorAll(':scope > :not(nav):not(.wp-block-gallery)').length > 0
 
   // Elements to activate the different gallery views
   const activators = {}

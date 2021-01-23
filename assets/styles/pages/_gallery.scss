@@ -26,7 +26,7 @@
 }
 
 // CSS selector for the gallery 'other content' (serving as description)
-$other-content: ':not(nav):not(figure.wp-block-gallery)';
+$other-content: ':not(nav):not(.wp-block-gallery)';
 
 body.single-format-gallery {
     margin: 30px;
