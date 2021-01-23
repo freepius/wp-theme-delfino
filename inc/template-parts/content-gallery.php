@@ -13,7 +13,7 @@ echo sprintf(
 
     <!-- Buttons to activate the different gallery views -->
     <ul>
-        <li><a href="#" role="button" data-view="gallery"
+        <li><a href="#" role="button" data-view="gallery" class="active"
             aria-label="Activate the gallery view (one photo by one photo)">Gallery</a>
         </li>
         <li><a href="#" role="button" data-view="index"
@@ -25,7 +25,7 @@ echo sprintf(
     </ul>
 </header>
 
-<section>
+<section class="gallery">
     <!-- Buttons to navigate through photos and gallery description -->
     <nav>
         <a role="button" data-photo="prev" aria-label="Display the previous photo"></a>

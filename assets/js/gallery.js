@@ -124,6 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
   photos.forEach(photo => photo.classList.add('invisible'))
 
   // By default: display the first photo of the gallery view
+  activeView = 'gallery'
   activateItem(photos[0])
 
   // Manage activators for the gallery views
