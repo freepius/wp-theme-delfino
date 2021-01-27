@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchInProgress = true
 
     const posts = getPosts()
-    const response = await fetch(`${ajaxurl}?action=delfino_infinite_scroll&offset=${posts.length}`)
+    const response = await fetch(`${ajaxurl}&action=delfino_infinite_scroll&offset=${posts.length}`)
     const text = await response.text()
 
     if (response.ok && text) {

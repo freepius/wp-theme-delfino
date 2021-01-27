@@ -9,7 +9,7 @@
 
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class(is_page() ? 'collapser' : ''); ?>>
+<article id="post-<?php the_ID(); ?>" <?php post_class( is_page() ? 'collapser' : '' ); ?>>
 	<?php
 		the_title( '<h1 class="entry-title screen-reader-text">', '</h1>' );
 		the_content();

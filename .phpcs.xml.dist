@@ -101,7 +101,7 @@
 	#############################################################################
 	-->
 
-	<config name="testVersion" value="7.4-"/>
+	<rule ref="./.phpcs-test-version-override.xml"/>
 	<rule ref="PHPCompatibilityWP"/>
 
 </ruleset>

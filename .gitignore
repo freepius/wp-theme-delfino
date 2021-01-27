@@ -24,6 +24,7 @@ node_modules/
 *.sqlite
 
 # ignore some dev files
+*.code-workspace
 wpackio.server.js
 
 # ignore "dist" directory (contains compiled/copied css, js, images, etc. ; managed by webpack through wpack.io)
