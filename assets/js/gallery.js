@@ -14,7 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const activePhotoLegend = main.querySelector(':scope > header > h2')
 
   // A gallery is composed by photos and eventual other content (serving as description)
-  const photos = section.querySelectorAll('li.blocks-gallery-item')
+  const photos = section.querySelectorAll('figure.wp-block-image')
+
   const hasOtherContent = section.querySelectorAll(':scope > :not(nav):not(.wp-block-gallery)').length > 0
 
   // Elements to activate the different gallery views
@@ -94,8 +95,8 @@ document.addEventListener('DOMContentLoaded', () => {
    * @param {boolean|HTMLElement} item
    */
   function setActiveItem (item) {
-    activeItem?.classList?.add('invisible') // Hide current active item
-    item?.classList?.remove('invisible') // Display new one
+    isPhoto(activeItem) && (activeItem.id = '') // Hide current active item
+    isPhoto(item) && (item.id = 'individual-image') // Display new one
     activeItem = item
   }
 
@@ -119,13 +120,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // By default, all photos are displayed but invisible (ie, we do not use 'display: none;' css rule).
-  // Therefore they are loaded early by the browser.
-  photos.forEach(photo => photo.classList.add('invisible'))
-
-  // By default: display the first photo of the gallery view
-  activeView = 'gallery'
-  activateItem(photos[0])
+  // By default: display the index view
+  activateView('index')
 
   // Manage activators for the gallery views
   for (const [view, activator] of Object.entries(activators)) {

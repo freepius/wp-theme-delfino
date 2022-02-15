@@ -19,10 +19,10 @@ echo sprintf(
 
 	<!-- Buttons to activate the different gallery views -->
 	<ul>
-		<li><a href="#" role="button" data-view="gallery" class="active"
+		<li><a href="#" role="button" data-view="gallery"
 			aria-label="Activate the gallery view (one photo by one photo)">Gallery</a>
 		</li>
-		<li><a href="#" role="button" data-view="index"
+		<li><a href="#" role="button" data-view="index" class="active"
 			aria-label="Activate the index view (a photo wall)">Index</a>
 		</li>
 		<li><a href="#" role="button" data-view="description"
@@ -31,7 +31,7 @@ echo sprintf(
 	</ul>
 </header>
 
-<section class="gallery">
+<section class="index">
 	<!-- Buttons to navigate through photos and gallery description -->
 	<nav>
 		<a role="button" data-photo="prev" aria-label="Display the previous photo"></a>

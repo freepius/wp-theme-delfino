@@ -2,28 +2,6 @@
  * STYLES FOR THE WORDPRESS GALLERY POSTS
  ***********************************************/
 
-// Unset the default styles of the Wordpress block gallery.
-@mixin wp-gallery-styles-unset {
-    li {
-        width: unset;
-        position: unset;
-
-        img {
-            width: unset;
-        }
-
-        figcaption {
-            width: unset;
-            max-height: unset;
-            padding: unset;
-            background: unset;
-            color: unset;
-            text-align: unset;
-            font-size: unset;
-        }
-    }
-}
-
 // CSS selector for the gallery 'other content' (serving as description)
 $other-content: ':not(nav):not(.wp-block-gallery)';
 
@@ -63,8 +41,19 @@ body.single-format-gallery {
             bottom: 0;
             width: 20%;
 
-            > h1, > h2 { font-size: 1em; }
-            > h2 { font-weight: 400; }
+            > h1 {
+                font-size: 1.2em;
+                font-weight: 700;
+            }
+
+            > h2 {
+                max-width: 300px;
+                font-size: 1.0em;
+                font-weight: 400;
+                line-height: 150%;
+                text-align: justify;
+                word-break: keep-all;
+            }
 
             > ul {
                 @include list-inline;
@@ -75,16 +64,14 @@ body.single-format-gallery {
                 }
 
                 a {
+                    text-decoration: none;
+
                     &.active {
                         font-weight: 700;
                         &:hover {
                             color: inherit;
                             cursor: default;
                         }
-                    }
-
-                    &:not(.active) {
-                        text-decoration: none;
                     }
                 }
             }
@@ -149,16 +136,13 @@ body.single-format-gallery {
                     grid-row: 1 / 2; // gallery is displayed before other content
                     display: flex;
 
-                    li {
+                    > figure.wp-block-image {
+                        margin-bottom: unset !important;
                         flex-grow: unset; // extra items take a normal width (and not all the remaining width)
 
                         &:hover {
                             opacity: .5;
                             cursor: pointer;
-                        }
-
-                        > figure {
-                            align-items: center;
                         }
                     }
                 }
@@ -171,27 +155,20 @@ body.single-format-gallery {
                 }
 
                 > figure.wp-block-gallery {
-                    &, ul, li, figure {
+                    &, figure, img {
                         height: 100%;
                         display: block;
                     }
 
-                    @include wp-gallery-styles-unset;
+                    img {
+                        margin: 0 auto;
+                        object-fit: contain;
+                    }
 
-                    li {
-                        margin: 0;
-
-                        img {
-                            height: 100%;
-                            margin: 0 auto;
-                            object-fit: contain;
-                        }
-
+                    > figure.wp-block-image:not(#individual-image) {
                         // Do not use 'display: none;'
                         // Otherwise the image is not loaded (until its first display)
-                        &.invisible {
-                            @extend %invisible;
-                        }
+                        @extend %invisible;
                     }
                 }
             }
@@ -204,7 +181,7 @@ body.single-format-gallery {
             display: list-item;
 
             &::before  {
-                content: '> ' !important;
+                content: none !important;
                 margin: 0 !important;
             }
         }
