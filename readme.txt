@@ -6,7 +6,7 @@ Tags:
 Requires at least: 7.4
 Tested up to: 7.4
 Requires PHP: 7.4
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 License: GPL-3.0
 License URI: LICENSE
 
@@ -21,6 +21,11 @@ WordPress theme for the photographer Claire Delfino website.
 3. Click Activate to use your new theme right away.
 
 == Changelog ==
+
+= 1.1.3 - Feb 15 2022 =
+* Update the **Gallery post** codes (html, js and scss) to the new `.wp-block-gallery` structure
+* Upgrade **wpack.io**
+* Minor CSS changes
 
 = 1.1 - Jan 20 2021 =
 * Use [wpack.io](https://wpack.io/) as development tool: to compile scss, to transpile esnext, to package the theme, etc.
