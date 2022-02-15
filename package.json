@@ -17,8 +17,8 @@
     "url": "https://github.com/freepius/wp-theme-delfino/issues"
   },
   "devDependencies": {
-    "@wpackio/scripts": "^5.0.0",
-    "sass": "^1.32.4"
+    "@wpackio/scripts": "*",
+    "sass": "*"
   },
   "scripts": {
     "bootstrap": "wpackio-scripts bootstrap",
@@ -27,6 +27,6 @@
     "archive": "wpackio-scripts pack"
   },
   "dependencies": {
-    "@wpackio/entrypoint": "^5.0.0"
+    "@wpackio/entrypoint": "*"
   }
 }
