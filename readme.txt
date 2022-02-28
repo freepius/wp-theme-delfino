@@ -6,7 +6,7 @@ Tags:
 Requires at least: 7.4
 Tested up to: 7.4
 Requires PHP: 7.4
-Stable tag: 1.1.3
+Stable tag: 1.1.4
 License: GPL-3.0
 License URI: LICENSE
 
@@ -21,6 +21,11 @@ WordPress theme for the photographer Claire Delfino website.
 3. Click Activate to use your new theme right away.
 
 == Changelog ==
+
+= 1.1.4 - Feb 28 2022 =
+* A **Gallery post** can now display its index view in full page (with the <body> class .gallery-full-page-index):
+  it then displays the main menu and hides the gallery left nav.
+* Various small design fixes and improvements.
 
 = 1.1.3 - Feb 15 2022 =
 * Update the **Gallery post** codes (html, js and scss) to the new `.wp-block-gallery` structure

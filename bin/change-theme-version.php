@@ -6,8 +6,8 @@
  * @package Delfino
  */
 
-$old = '1.1.2';
-$new = '1.1.3';
+$old = '1.1.3';
+$new = '1.1.4';
 $dir = dirname(__FILE__) . '/../';
 
 $filesPatterns = [
