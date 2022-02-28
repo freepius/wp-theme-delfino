@@ -1,0 +1,30 @@
+/************************************************
+ * STYLES FOR THE WORDPRESS GALLERY POSTS
+ * whose <body> has the .gallery-full-page-index class.
+ ***********************************************/
+
+body.single-format-gallery.gallery-full-page-index {
+    &.gallery-view-index {
+        > nav {
+            display: block;
+        }
+
+        > main {
+            max-width: var(--page-max-width);
+            margin: 0 auto;
+            padding: 30px;
+
+            > a#back-to-category,
+            > header {
+                display: none;
+            }
+
+            > section {
+                position: unset;
+                right: unset;
+                width: unset;
+                overflow-y: unset;
+            }
+        }
+    }
+}

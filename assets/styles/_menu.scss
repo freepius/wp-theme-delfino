@@ -2,8 +2,9 @@
  * MAIN MENU
  ***********************************************/
 
-body.home > nav > h1 > a,
-body > nav > ul > li.current-menu-item > a {
+body.home > nav > .wrapper > h1 > a,
+body > nav > .wrapper > ul > li.current-menu-item > a,
+body > nav > .wrapper > ul > li.current-menu-parent > a {
     color: var(--color-primary);
 }
 

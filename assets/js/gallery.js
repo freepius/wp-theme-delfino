@@ -47,9 +47,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (view === activeView) return
 
     activators[activeView]?.classList.remove('active')
+    document.body.classList.remove('gallery-view-' + activeView)
     section.classList.remove(activeView)
 
     activators[view].classList.add('active')
+    document.body.classList.add('gallery-view-' + view)
     section.classList.add(view)
 
     activeView = view
