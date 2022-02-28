@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
  */
 function handleToggleMainMenu () {
   const mainMenu = document.getElementById('main-menu')
-  const toggler = document.querySelector('body > nav > button[aria-controls="main-menu"]')
+  const toggler = document.querySelector('body > nav button[aria-controls="main-menu"]')
 
   toggler.addEventListener('click', () => {
     mainMenu.classList.toggle('active')

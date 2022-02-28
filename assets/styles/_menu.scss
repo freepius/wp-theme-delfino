@@ -13,49 +13,52 @@ body > nav {
     background-color: inherit;
     font-size: 2em;
     font-weight: 700;
+    z-index: 99;
 
     a {
         padding-right: 10px;
         text-decoration: none;
     }
 
-    > h1,
-    > ul,
-    > ul > li {
-        margin: 0;
-        padding: 0;
-        display: inline;
-        font-size: inherit;
-    }
-
-    > button {
-        display: none;
-    }
-
-    @media (max-width: $breakpoint-lg) {
-        font-size: 2em;
-    }
-
-    @media (max-width: $breakpoint-md) {
-        > ul {
-            display: block;
+    > .wrapper {
+        > h1,
+        > ul,
+        > ul > li {
+            margin: 0;
+            padding: 0;
+            display: inline;
+            font-size: inherit;
         }
-    }
 
-    @media (max-width: $breakpoint-sm) {
-        > ul {
-            > li { display: none; }
+        > button {
+            display: none;
+        }
 
-            &.active > li,
-            > li.current-menu-item {
+        @media (max-width: $breakpoint-lg) {
+            font-size: 2em;
+        }
+
+        @media (max-width: $breakpoint-md) {
+            > ul {
                 display: block;
             }
         }
 
-        > button {
-            display: initial;
-            float: right;
-            @include button-as-link;
+        @media (max-width: $breakpoint-sm) {
+            > ul {
+                > li { display: none; }
+
+                &.active > li,
+                > li.current-menu-item {
+                    display: block;
+                }
+            }
+
+            > button {
+                display: initial;
+                float: right;
+                @include button-as-link;
+            }
         }
     }
 }

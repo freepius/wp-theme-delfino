@@ -11,10 +11,10 @@
     background-color: var(--color-primary);
     color: #ffffff;
     font-size: 1.33em;
-    font-weight: 700;
 
     > * {
         max-width: 450px;
+        padding: 0 30px;
         opacity: 0.95;
     }
 

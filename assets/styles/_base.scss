@@ -9,7 +9,9 @@ body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     letter-spacing: 0.02em;
 
-    > header, > nav, > main {
+    > header,
+    > nav > .wrapper,
+    > main {
         max-width: var(--page-max-width);
         margin: 0 auto;
         padding: 30px;

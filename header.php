@@ -38,16 +38,18 @@
 </header>
 
 <nav>
-	<h1><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
-	<button aria-controls="main-menu" aria-expanded="false" aria-label="Toggle the main menu">Menu</button>
+	<div class="wrapper">
+		<h1><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
+		<button aria-controls="main-menu" aria-expanded="false" aria-label="Toggle the main menu">Menu</button>
 
-	<?php
-	wp_nav_menu(
-		array(
-			'theme_location' => 'main_menu',
-			'menu_id'        => 'main-menu',
-			'container'      => false,
-		)
-	);
-	?>
+		<?php
+		wp_nav_menu(
+			array(
+				'theme_location' => 'main_menu',
+				'menu_id'        => 'main-menu',
+				'container'      => false,
+			)
+		);
+		?>
+	</div>
 </nav>
