@@ -138,13 +138,21 @@ document.addEventListener('DOMContentLoaded', () => {
     nav.addEventListener('click', () => activateItem(nav.dataset.photo))
   }
 
-  // Manage the 'key press' navigation in the gallery items
+  // 1. Manage the 'key press' navigation in the gallery items
+  // 2. Pressing the escape key activates the 'index' view.
   document.addEventListener('keyup', e =>
-    (e.key === 'ArrowLeft' || e.key === 'ArrowRight') && !isActiveView('index') && activateItem(e.key)
+    /* 1 */ ((e.key === 'ArrowLeft' || e.key === 'ArrowRight') && !isActiveView('index') && activateItem(e.key)) ||
+    /* 2 */ (e.key === 'Escape' && !(e.ctrlKey || e.altKey || e.shiftKey) && activateView('index'))
   )
 
-  // On 'index' view only, a click on photo displays it in the 'gallery' view
+  // On 'index' view only, a click on photo displays it in the 'gallery' view.
   for (const photo of photos) {
     photo.addEventListener('click', () => isActiveView('index') && activateItem(photo))
   }
+
+  // For a gallery having the special mode "Index view on full page" :
+  // a click on the "Back to category" link switches on the index view.
+  document
+    .querySelector('body.gallery-full-page-index > main > a#back-to-category')
+    .addEventListener('click', (e) => e.preventDefault() || activateView('index'))
 })

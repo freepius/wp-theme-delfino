@@ -4,6 +4,12 @@
  ***********************************************/
 
 body.single-format-gallery.gallery-full-page-index {
+    &:not(.gallery-view-index) {
+        > main > header > h1 {
+            display: none;
+        }
+    }
+
     &.gallery-view-index {
         > nav {
             display: block;

@@ -9,7 +9,7 @@
 
 // Version is also to update in: style.css, readme.txt, package.json.
 if ( ! defined( 'DELFINO_VERSION' ) ) {
-	define( 'DELFINO_VERSION', '1.1.3' );
+	define( 'DELFINO_VERSION', '1.1.5' );
 }
 
 
@@ -160,3 +160,18 @@ function delfino_get_posts( $query ) {
 	}
 }
 add_action( 'pre_get_posts', 'delfino_get_posts' );
+
+
+/**
+ * For a gallery post, add a `body` class to activate the default view.
+ *
+ * @param array $classes An array of body class names.
+ */
+function delfino_gallery_activate_default_view( array $classes ): array {
+	if ( is_single() && has_post_format( 'gallery' ) ) {
+		$classes[] = 'gallery-view-index';
+	}
+
+	return $classes;
+}
+add_filter( 'body_class', 'delfino_gallery_activate_default_view' );

@@ -6,7 +6,7 @@ Tags:
 Requires at least: 7.4
 Tested up to: 7.4
 Requires PHP: 7.4
-Stable tag: 1.1.4
+Stable tag: 1.1.5
 License: GPL-3.0
 License URI: LICENSE
 
