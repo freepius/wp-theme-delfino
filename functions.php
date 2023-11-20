@@ -175,3 +175,13 @@ function delfino_gallery_activate_default_view( array $classes ): array {
 	return $classes;
 }
 add_filter( 'body_class', 'delfino_gallery_activate_default_view' );
+
+/**
+ * For a gallery post in the 'Portraits' category, display its 'index' view in full page.
+ */
+add_filter(
+	'body_class',
+	fn ( array $classes ): array => in_category( 'Portraits' )
+	? array_merge( $classes, array( 'gallery-full-page-index' ) )
+	: $classes
+);
